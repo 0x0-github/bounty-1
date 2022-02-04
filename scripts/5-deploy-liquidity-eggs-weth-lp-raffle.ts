@@ -4,8 +4,8 @@ import { waitFor } from "./tx-helper";
 import { readContractAddressesFromJSON, writeContractAddressToJSON } from "./addresses-utils";
 import {
   EGGS_CONTRACT_NAME,
-  LP_RAFFLE_CONTRACT_NAME, RANDOM_UTILS_CONTRACT_NAME,
-  TEST_WETH_CONTRACT_NAME
+  LP_RAFFLE_CONTRACT_NAME,
+  RANDOM_UTILS_CONTRACT_NAME,
 } from "./constants";
 import { BigNumber } from "ethers";
 
@@ -28,7 +28,8 @@ async function main() {
     deployer
   ) as IUniswapV2Factory;
 
-  const pair = await waitFor(dexFactory.createPair(eggs,wethAddr));
+  await waitFor(dexFactory.createPair(eggs,wethAddr));
+  const pair = await dexFactory.getPair(eggs,wethAddr);
   const liqWethToAdd = BigNumber.from(process.env.ADD_LIQ_WETH);
   const liqEggsToAdd = BigNumber.from(process.env.ADD_LIQ_EGGS);
 
@@ -54,7 +55,7 @@ async function main() {
     deadline
   ));
 
-  const LpRaffle = await ethers.getContractFactory("LPRaffle");
+  const LpRaffle = await ethers.getContractFactory(LP_RAFFLE_CONTRACT_NAME);
   const lpRaffle = await LpRaffle.deploy(pair, randomUtils);
 
   await lpRaffle.deployed();
@@ -63,7 +64,7 @@ async function main() {
 
   writeContractAddressToJSON(
     {contract: LP_RAFFLE_CONTRACT_NAME, address: lpRaffle.address}
-  )
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

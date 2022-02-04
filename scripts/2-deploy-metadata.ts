@@ -13,7 +13,7 @@ async function main() {
 
   writeContractAddressToJSON(
     {contract: METADATA_CONTRACT_NAME, address: metadata.address}
-  )
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

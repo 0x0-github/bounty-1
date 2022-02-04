@@ -74,6 +74,15 @@ const config: HardhatUserConfig = {
       },
       {
         version: "0.6.6",
+        settings: {
+          metadata: {
+            bytecodeHash: "none",
+          },
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
       },
       {
         version: "0.5.16",

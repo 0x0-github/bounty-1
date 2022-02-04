@@ -1,27 +1,15 @@
 import { ethers } from "hardhat";
 import { HenHouse } from "../types";
-import { readContractAddressesFromJSON, writeContractAddressToJSON } from "./addresses-utils";
+import {
+  readContractAddressesFromJSON,
+  writeContractAddressToJSON
+} from "./addresses-utils";
 import {
   EGGS_CONTRACT_NAME,
   FOX_HEN_CONTRACT_NAME,
-  HEN_HOUSE_CONTRACT_NAME, RANDOM_UTILS_CONTRACT_NAME,
-  TEST_WETH_CONTRACT_NAME
+  HEN_HOUSE_CONTRACT_NAME,
+  RANDOM_UTILS_CONTRACT_NAME,
 } from "./constants";
-
-async function genTestTokens() {
-  const Weth = await ethers.getContractFactory("WETH");
-  const weth = await Weth.deploy();
-
-  await weth.deployed();
-
-  console.log("WETH deployed to:", weth.address);
-
-  writeContractAddressToJSON(
-    {contract: TEST_WETH_CONTRACT_NAME, address: weth.address}
-  )
-
-  return weth.address;
-}
 
 async function main() {
   const addresses = readContractAddressesFromJSON();
@@ -40,7 +28,7 @@ async function main() {
   ethFeed = process.env.WETH_PRICE_FEED!;
   weth = process.env.WETH_ADDRESS!;
 
-  const HenHouse = await ethers.getContractFactory("HenHouse");
+  const HenHouse = await ethers.getContractFactory(HEN_HOUSE_CONTRACT_NAME);
   const henHouse = await HenHouse.deploy(
     foxHen,
     eggs,
@@ -55,7 +43,7 @@ async function main() {
 
   writeContractAddressToJSON(
     {contract: HEN_HOUSE_CONTRACT_NAME, address: henHouse.address}
-  )
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

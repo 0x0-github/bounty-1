@@ -41,7 +41,7 @@ async function main() {
 
   writeContractAddressToJSON(
     {contract: FOX_HEN_CONTRACT_NAME, address: foxHen.address}
-  )
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
