@@ -15,6 +15,14 @@ contract FoxHen is ERC721Enumerable, Ownable {
     uint16 public purchased = 0;
     IRandomUtils public randomUtils;
 
+    struct OracleMinting {
+        address minter;
+        uint256 tokenId;
+        bool fulfilled;
+    }
+    mapping(bytes32=>OracleMinting) oracleMintings;
+    mapping(bytes32=>uint256) oracleMintingsRoundIds;
+
     struct TokenWithMetadata {
         uint256 tokenId;
         bool isFox;
@@ -23,6 +31,7 @@ contract FoxHen is ERC721Enumerable, Ownable {
 
     mapping(uint256=>bool) public isFox;
     uint256[] public foxes;
+    uint16 public stolenMints;
     mapping(uint256=>uint256) public traitsOfToken;
     mapping(uint256=>bool) public traitsTaken;
     bool public mainSaleStarted;
@@ -89,20 +98,59 @@ contract FoxHen is ERC721Enumerable, Ownable {
         return false;
     }
 
-    function fulfillRandomness(
-        address recipient,
+    function getRecipient(
         uint256 tokenId,
+        address minter,
         uint256 seed
+    )
+        internal
+        view
+        returns (address)
+    {
+        if (
+            tokenId > DISCOUNTED_TOKENS &&
+            tokenId <= MAX_TOKENS &&
+            (uint256(keccak256(abi.encode(seed, 3))) % 10) == 0
+        ) {
+            uint256 fox
+                = foxes[uint256(keccak256(abi.encode(seed, 4))) % foxes.length];
+            address owner = ownerOf(fox);
+            if (owner != address(0)) {
+                return owner;
+            }
+        }
+        return minter;
+    }
+
+    function fulfillRandomnessFromOracle(
+        bytes32 requestId,
+        uint256 roundId
+    )
+        external
+    {
+        OracleMinting storage minting = oracleMintings[requestId];
+        require(!minting.fulfilled);
+        require(minting.minter != address(0));
+        minting.fulfilled = true;
+        uint256 randomness = randomUtils.getRandomNumber(requestId, roundId);
+        fulfillRandomness(minting.minter, minting.tokenId, randomness);
+    }
+
+    function fulfillRandomness(
+        address minter,
+        uint256 tokenId,
+        uint256 randomness
     )
         internal
         returns (uint256)
     {
-        uint256 randomness = randomUtils.getRandomNumber(
-            seed == 0 ? gasleft() : seed);
-
         setSpecies(tokenId, randomness);
         setTraits(tokenId, randomness);
 
+        address recipient = getRecipient(tokenId, minter, randomness);
+        if (recipient != minter) {
+            stolenMints++;
+        }
         _mint(recipient, tokenId);
 
         return randomness;
@@ -169,7 +217,18 @@ contract FoxHen is ERC721Enumerable, Ownable {
         for (uint8 i = 0; i < amount; i++) {
             discountMintsUsed[minter]++;
             purchased++;
-            seed = fulfillRandomness(minter, purchased, seed);
+            if (randomUtils.randomKind() == IRandomUtils.RandomKind.Oracle) {
+                (
+                    bytes32 requestId,
+                    uint256 roundId
+                ) = randomUtils.requestRandomness();
+                oracleMintings[requestId] = OracleMinting(minter, purchased, false);
+                oracleMintingsRoundIds[requestId] = roundId;
+            } else if (randomUtils.randomKind() == IRandomUtils.RandomKind.OnChain) {
+                uint256 randomness = randomUtils.getRandomNumber(seed);
+
+                seed = fulfillRandomness(minter, purchased, randomness);
+            }
         }
 
         uint256 refundAmount = totalPrice - msg.value;
@@ -202,11 +261,18 @@ contract FoxHen is ERC721Enumerable, Ownable {
         uint256 seed = 0;
 
         for (uint16 i = 1; i <= amount; i++) {
-            seed = fulfillRandomness(
-                minter,
-                initialPurchased + i,
-                seed
-            );
+            if (randomUtils.randomKind() == IRandomUtils.RandomKind.Oracle) {
+                (
+                    bytes32 requestId,
+                    uint256 roundId
+                ) = randomUtils.requestRandomness();
+                oracleMintings[requestId] = OracleMinting(minter, purchased, false);
+                oracleMintingsRoundIds[requestId] = roundId;
+            } else if (randomUtils.randomKind() == IRandomUtils.RandomKind.OnChain) {
+                uint256 randomness = randomUtils.getRandomNumber(seed);
+
+                seed = fulfillRandomness(minter, initialPurchased + i, randomness);
+            }
         }
     }
 
@@ -214,7 +280,18 @@ contract FoxHen is ERC721Enumerable, Ownable {
         require(extrasCount + 1 <= 30, "Max extras minted");
         extrasCount++;
         uint256 tokenId = MAX_TOKENS + extrasCount;
-        fulfillRandomness(recipient, tokenId, 0);
+        if (randomUtils.randomKind() == IRandomUtils.RandomKind.Oracle) {
+            (
+                bytes32 requestId,
+                uint256 roundId
+            ) = randomUtils.requestRandomness();
+            oracleMintings[requestId] = OracleMinting(recipient, purchased, false);
+            oracleMintingsRoundIds[requestId] = roundId;
+        } else if (randomUtils.randomKind() == IRandomUtils.RandomKind.OnChain) {
+            uint256 randomness = randomUtils.getRandomNumber(0);
+
+            fulfillRandomness(recipient, tokenId, randomness);
+        }
     }
 
     // Admin

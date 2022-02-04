@@ -38,10 +38,7 @@ contract RandomUtils is IRandomUtils {
         roundId = 0;
     }
 
-    function getRandomNumber(
-        bytes32 seed,
-        uint256 round
-    )
+    function getRandomNumber(bytes32, uint256)
         external
         pure
         override

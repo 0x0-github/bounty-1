@@ -101,8 +101,8 @@ export class RandomUtils extends BaseContract {
     ): Promise<[BigNumber]>;
 
     "getRandomNumber(bytes32,uint256)"(
-      seed: BytesLike,
-      round: BigNumberish,
+      arg0: BytesLike,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { random: BigNumber }>;
 
@@ -119,8 +119,8 @@ export class RandomUtils extends BaseContract {
   ): Promise<BigNumber>;
 
   "getRandomNumber(bytes32,uint256)"(
-    seed: BytesLike,
-    round: BigNumberish,
+    arg0: BytesLike,
+    arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -137,8 +137,8 @@ export class RandomUtils extends BaseContract {
     ): Promise<BigNumber>;
 
     "getRandomNumber(bytes32,uint256)"(
-      seed: BytesLike,
-      round: BigNumberish,
+      arg0: BytesLike,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -158,8 +158,8 @@ export class RandomUtils extends BaseContract {
     ): Promise<BigNumber>;
 
     "getRandomNumber(bytes32,uint256)"(
-      seed: BytesLike,
-      round: BigNumberish,
+      arg0: BytesLike,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -175,8 +175,8 @@ export class RandomUtils extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     "getRandomNumber(bytes32,uint256)"(
-      seed: BytesLike,
-      round: BigNumberish,
+      arg0: BytesLike,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

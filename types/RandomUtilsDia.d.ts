@@ -132,7 +132,7 @@ export class RandomUtilsDia extends BaseContract {
     DELAY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "getRandomNumber(uint256)"(
-      seed: BigNumberish,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -159,7 +159,7 @@ export class RandomUtilsDia extends BaseContract {
   DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
   "getRandomNumber(uint256)"(
-    seed: BigNumberish,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -186,7 +186,7 @@ export class RandomUtilsDia extends BaseContract {
     DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getRandomNumber(uint256)"(
-      seed: BigNumberish,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -234,7 +234,7 @@ export class RandomUtilsDia extends BaseContract {
     DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getRandomNumber(uint256)"(
-      seed: BigNumberish,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -262,7 +262,7 @@ export class RandomUtilsDia extends BaseContract {
     DELAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getRandomNumber(uint256)"(
-      seed: BigNumberish,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

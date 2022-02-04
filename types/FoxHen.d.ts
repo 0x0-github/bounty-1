@@ -34,6 +34,7 @@ interface FoxHenInterface extends ethers.utils.Interface {
     "eggsPrice(uint16)": FunctionFragment;
     "foxCount()": FunctionFragment;
     "foxes(uint256)": FunctionFragment;
+    "fulfillRandomnessFromOracle(bytes32,uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isFox(uint256)": FunctionFragment;
@@ -50,6 +51,7 @@ interface FoxHenInterface extends ethers.utils.Interface {
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setRandomUtils(address)": FunctionFragment;
     "signatureUsed(bytes)": FunctionFragment;
+    "stolenMints()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "toggleMainSale()": FunctionFragment;
@@ -104,6 +106,10 @@ interface FoxHenInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "foxCount", values?: undefined): string;
   encodeFunctionData(functionFragment: "foxes", values: [BigNumberish]): string;
   encodeFunctionData(
+    functionFragment: "fulfillRandomnessFromOracle",
+    values: [BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
   ): string;
@@ -151,6 +157,10 @@ interface FoxHenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "signatureUsed",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stolenMints",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -226,6 +236,10 @@ interface FoxHenInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "foxCount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "foxes", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "fulfillRandomnessFromOracle",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
@@ -269,6 +283,10 @@ interface FoxHenInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "signatureUsed",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "stolenMints",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -443,6 +461,12 @@ export class FoxHen extends BaseContract {
 
     foxes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    fulfillRandomnessFromOracle(
+      requestId: BytesLike,
+      roundId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -518,6 +542,8 @@ export class FoxHen extends BaseContract {
       arg0: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    stolenMints(overrides?: CallOverrides): Promise<[number]>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -621,6 +647,12 @@ export class FoxHen extends BaseContract {
 
   foxes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+  fulfillRandomnessFromOracle(
+    requestId: BytesLike,
+    roundId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -690,6 +722,8 @@ export class FoxHen extends BaseContract {
   ): Promise<ContractTransaction>;
 
   signatureUsed(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+  stolenMints(overrides?: CallOverrides): Promise<number>;
 
   supportsInterface(
     interfaceId: BytesLike,
@@ -784,6 +818,12 @@ export class FoxHen extends BaseContract {
 
     foxes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    fulfillRandomnessFromOracle(
+      requestId: BytesLike,
+      roundId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -848,6 +888,8 @@ export class FoxHen extends BaseContract {
     ): Promise<void>;
 
     signatureUsed(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+    stolenMints(overrides?: CallOverrides): Promise<number>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1014,6 +1056,12 @@ export class FoxHen extends BaseContract {
 
     foxes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    fulfillRandomnessFromOracle(
+      requestId: BytesLike,
+      roundId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1089,6 +1137,8 @@ export class FoxHen extends BaseContract {
       arg0: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    stolenMints(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1196,6 +1246,12 @@ export class FoxHen extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    fulfillRandomnessFromOracle(
+      requestId: BytesLike,
+      roundId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1274,6 +1330,8 @@ export class FoxHen extends BaseContract {
       arg0: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    stolenMints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,

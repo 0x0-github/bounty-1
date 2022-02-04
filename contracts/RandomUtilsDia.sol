@@ -66,7 +66,7 @@ contract RandomUtilsDia is IRandomUtils {
         random = uint256(keccak256(abi.encodePacked(rand, requestId)));
     }
 
-    function getRandomNumber(uint256 seed)
+    function getRandomNumber(uint256)
         external
         pure
         override
