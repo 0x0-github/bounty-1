@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+contract Oracle {
+    uint256 round;
+
+    function getLastRound() public view returns (uint256) {
+        return round;
+    }
+
+    function incrementRound(uint256 newRound) public {
+        round = newRound;
+    }
+}
+
 contract ChainLinkETHUSDPriceFeed {
     constructor() {
     }
@@ -23,7 +35,7 @@ contract ChainLinkETHUSDPriceFeed {
         answeredInRound = 36893488147420553287;
     }
 
-    function getLatestRoundData()
+    function latestAnswer()
         external
         pure
         returns (int256 answer)
