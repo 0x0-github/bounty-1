@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract ChainLinkETHUSDPriceFeed {
-
     constructor() {
     }
 
@@ -24,4 +23,11 @@ contract ChainLinkETHUSDPriceFeed {
         answeredInRound = 36893488147420553287;
     }
 
+    function getLatestRoundData()
+        external
+        pure
+        returns (int256 answer)
+    {
+        answer = 259806329701;
+    }
 }
