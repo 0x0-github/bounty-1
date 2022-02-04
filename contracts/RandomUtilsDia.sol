@@ -15,7 +15,7 @@ contract RandomUtilsDia is IRandomUtils {
         randomOracle = oracle;
     }
 
-    function randomKind() external override returns (RandomKind) {
+    function randomKind() external override pure returns (RandomKind) {
         return RandomKind.Oracle;
     }
 
@@ -53,6 +53,7 @@ contract RandomUtilsDia is IRandomUtils {
         uint256 round
     )
         external
+        view
         override
         returns (uint256 random)
     {
@@ -67,7 +68,7 @@ contract RandomUtilsDia is IRandomUtils {
 
     function getRandomNumber(uint256 seed)
         external
-        view
+        pure
         override
         returns (uint256)
     {

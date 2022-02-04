@@ -139,17 +139,15 @@ export class RandomUtilsDia extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       requestId: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { random: BigNumber }>;
 
     getRandomValue(
       _round: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    randomKind(overrides?: CallOverrides): Promise<[number]>;
 
     randomOracle(overrides?: CallOverrides): Promise<[string]>;
 
@@ -168,17 +166,15 @@ export class RandomUtilsDia extends BaseContract {
   "getRandomNumber(bytes32,uint256)"(
     requestId: BytesLike,
     round: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getRandomValue(
     _round: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  randomKind(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  randomKind(overrides?: CallOverrides): Promise<number>;
 
   randomOracle(overrides?: CallOverrides): Promise<string>;
 
@@ -245,7 +241,7 @@ export class RandomUtilsDia extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       requestId: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getRandomValue(
@@ -253,9 +249,7 @@ export class RandomUtilsDia extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    randomKind(overrides?: CallOverrides): Promise<BigNumber>;
 
     randomOracle(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -275,7 +269,7 @@ export class RandomUtilsDia extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       requestId: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getRandomValue(
@@ -283,9 +277,7 @@ export class RandomUtilsDia extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    randomKind(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     randomOracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

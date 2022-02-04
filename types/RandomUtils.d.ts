@@ -11,7 +11,6 @@ import {
   PopulatedTransaction,
   BaseContract,
   ContractTransaction,
-  Overrides,
   CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
@@ -104,16 +103,14 @@ export class RandomUtils extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       seed: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { random: BigNumber }>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    randomKind(overrides?: CallOverrides): Promise<[number]>;
 
     requestRandomness(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { seed: string; roundId: BigNumber }>;
   };
 
   "getRandomNumber(uint256)"(
@@ -124,16 +121,14 @@ export class RandomUtils extends BaseContract {
   "getRandomNumber(bytes32,uint256)"(
     seed: BytesLike,
     round: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  randomKind(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  randomKind(overrides?: CallOverrides): Promise<number>;
 
   requestRandomness(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { seed: string; roundId: BigNumber }>;
 
   callStatic: {
     "getRandomNumber(uint256)"(
@@ -165,16 +160,12 @@ export class RandomUtils extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       seed: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    randomKind(overrides?: CallOverrides): Promise<BigNumber>;
 
-    requestRandomness(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    requestRandomness(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -186,15 +177,11 @@ export class RandomUtils extends BaseContract {
     "getRandomNumber(bytes32,uint256)"(
       seed: BytesLike,
       round: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    randomKind(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    randomKind(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    requestRandomness(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    requestRandomness(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

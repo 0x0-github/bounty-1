@@ -69,10 +69,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DIARandomOracle__factory>;
     getContractFactory(
-      name: "DIARandomOracle",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.DIARandomOracle__factory>;
-    getContractFactory(
       name: "Eggs",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Eggs__factory>;
@@ -234,11 +230,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
-    getContractAt(
-      name: "DIARandomOracle",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.DIARandomOracle>;
     getContractAt(
       name: "DIARandomOracle",
       address: string,

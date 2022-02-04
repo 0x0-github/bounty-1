@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./IRandomUtils.sol";
 
 contract RandomUtils is IRandomUtils {
-    function randomKind() external override returns (RandomKind) {
+    function randomKind() external pure override returns (RandomKind) {
         return RandomKind.OnChain;
     }
 
@@ -30,6 +30,7 @@ contract RandomUtils is IRandomUtils {
 
     function requestRandomness()
         external
+        pure
         override
         returns (bytes32 seed, uint256 roundId)
     {
@@ -42,6 +43,7 @@ contract RandomUtils is IRandomUtils {
         uint256 round
     )
         external
+        pure
         override
         returns (uint256 random)
     {

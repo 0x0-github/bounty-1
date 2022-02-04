@@ -24,7 +24,7 @@ contract LPRaffle is Ownable {
 
     constructor(address _lpToken, address _randomUtils) {
         lpToken = IERC20(_lpToken);
-        randomUtils = IRandomUtils(randomUtils);
+        randomUtils = IRandomUtils(_randomUtils);
     }
 
     function allAccounts() public view returns (address[] memory) {
