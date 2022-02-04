@@ -231,10 +231,8 @@ contract FoxHen is ERC721Enumerable, Ownable {
             }
         }
 
-        uint256 refundAmount = totalPrice - msg.value;
-
-        if (refundAmount > 0) {
-            payable(msg.sender).transfer(refundAmount);
+        if (msg.value > totalPrice) {
+            payable(msg.sender).transfer(msg.value - totalPrice);
         }
     }
 
