@@ -46,6 +46,7 @@ interface HenHouseInterface extends ethers.utils.Interface {
     "paused()": FunctionFragment;
     "randomUtils()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "setEthFeed(address)": FunctionFragment;
     "setHeistPrice(uint8,uint256)": FunctionFragment;
     "setRandomUtils(address)": FunctionFragment;
     "stakeHen(uint256)": FunctionFragment;
@@ -139,6 +140,7 @@ interface HenHouseInterface extends ethers.utils.Interface {
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "setEthFeed", values: [string]): string;
   encodeFunctionData(
     functionFragment: "setHeistPrice",
     values: [BigNumberish, BigNumberish]
@@ -258,6 +260,7 @@ interface HenHouseInterface extends ethers.utils.Interface {
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setEthFeed", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setHeistPrice",
     data: BytesLike
@@ -483,6 +486,11 @@ export class HenHouse extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setEthFeed(
+      _ethFeed: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setHeistPrice(
       index: BigNumberish,
       price: BigNumberish,
@@ -656,6 +664,11 @@ export class HenHouse extends BaseContract {
   randomUtils(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setEthFeed(
+    _ethFeed: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -835,6 +848,8 @@ export class HenHouse extends BaseContract {
     randomUtils(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    setEthFeed(_ethFeed: string, overrides?: CallOverrides): Promise<void>;
 
     setHeistPrice(
       index: BigNumberish,
@@ -1021,6 +1036,11 @@ export class HenHouse extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setEthFeed(
+      _ethFeed: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setHeistPrice(
       index: BigNumberish,
       price: BigNumberish,
@@ -1173,6 +1193,11 @@ export class HenHouse extends BaseContract {
     randomUtils(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setEthFeed(
+      _ethFeed: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

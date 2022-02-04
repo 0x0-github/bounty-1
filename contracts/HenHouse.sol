@@ -405,6 +405,14 @@ contract HenHouse is Ownable {
         randomUtils = IRandomUtils(_randomUtils);
     }
 
+    function setEthFeed(address _ethFeed) external onlyOwner {
+        require(
+            _ethFeed != address(0),
+            "Cannot be zero"
+        );
+        ethFeed = AggregatorInterface(_ethFeed);
+    }
+
     function togglePause() external onlyOwner {
         paused = !paused;
     }
